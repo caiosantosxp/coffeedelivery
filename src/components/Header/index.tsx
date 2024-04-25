@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom'
 
 export function Header() {
   const { listItensPurchase } = useContext(ProductContext)
+
   const numberOfItems = listItensPurchase.length
 
   return (

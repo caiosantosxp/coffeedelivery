@@ -14,6 +14,16 @@ interface ItensListProduct {
   imagem: string
 }
 
+interface EnderecoClient {
+  cep: string
+  rua: string
+  numero: string
+  complemento?: string
+  bairro: string
+  cidade: string
+  uf: string
+}
+
 interface listOfMenuProductsType {
   id: number
   nome: string
@@ -27,10 +37,12 @@ interface listOfMenuProductsType {
 interface ProductContextType {
   listItensPurchase: ItensListProduct[]
   listOfMenuProducts: listOfMenuProductsType[]
+  dadosCheckout: EnderecoClient[]
   purchase: (product: ItensListProduct) => void
   addItemList: (id: number) => void
   removeAmountItemList: (id: number) => void
   removeItem: (id: number) => void
+  addDadosCheckout: (dados:EnderecoClient[]) => void
 }
 
 export const ProductContext = createContext({} as ProductContextType)
@@ -44,6 +56,7 @@ interface ProductsContextProviderProps {
 export function ProductsContextProvider({
   children,
 }: ProductsContextProviderProps) {
+
   const listOfMenuProducts = [
     {
       id: 1,
@@ -177,10 +190,14 @@ export function ProductsContextProvider({
       tags: 'Especial - Alcoolíco',
     },
   ]
+
   const [listItensPurchase, setlistItensPurchase] = useState<
     ItensListProduct[]
   >([])
 
+  const [ dadosCheckout, setDadosCheckout ] = useState<EnderecoClient[]>([])
+
+  console.log(dadosCheckout)
   function purchase(product: ItensListProduct) {
     setlistItensPurchase((state) => {
       const itemIndex = state.findIndex((item) => item.id === product.id)
@@ -249,15 +266,21 @@ export function ProductsContextProvider({
     setlistItensPurchase(updatedList)
   }
 
+  function addDadosCheckout(dados:EnderecoClient[]){
+    setDadosCheckout(dados)
+  }
+
   return (
     <ProductContext.Provider
       value={{
         listItensPurchase,
+        dadosCheckout,
         purchase,
         listOfMenuProducts,
         addItemList,
         removeAmountItemList,
         removeItem,
+        addDadosCheckout
       }}
     >
       {children}

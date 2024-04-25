@@ -3,11 +3,16 @@ import {
   DadosContainer,
   DetalhePedido,
   GradientBorderContainer,
+  ImagemContainer,
   PurchaseContainer,
 } from './styled'
 import motoboy from '../../assets/motoboy.png'
+import { useContext } from 'react'
+import { ProductContext } from '../../context/ProductsContexts'
 
 export function PurchaseCoffee() {
+  const { dadosCheckout } = useContext(ProductContext)
+
   return (
     <>
       <PurchaseContainer>
@@ -19,29 +24,35 @@ export function PurchaseCoffee() {
             </div>
             <DadosContainer>
               <div>
-                <MapPin />
+                <strong>
+                  <MapPin size={22} />
+                </strong>
                 <p>
                   Entrega em Rua joao Daniel Martinelli, 102 Farrapos - Porto
                   Alegre - RS
                 </p>
               </div>
               <div>
-                <Timer />
+                <strong>
+                  <Timer size={22}/>
+                </strong>
                 <p>
                   Previssao de entrega
                   <strong>20min - 30min</strong>
                 </p>
               </div>
               <div>
-                <CurrencyDollar />
+                <strong>
+                  <CurrencyDollar size={22}/>
+                </strong>
                 <p>Pagamento na entrega Cartão de Crédito</p>
               </div>
             </DadosContainer>
           </DetalhePedido>
         </GradientBorderContainer>
-        <div>
+        <ImagemContainer>
           <img src={motoboy} alt="" />
-        </div>
+        </ImagemContainer>
       </PurchaseContainer>
     </>
   )

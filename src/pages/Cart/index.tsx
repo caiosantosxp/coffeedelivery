@@ -20,18 +20,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
 import { useNavigate } from 'react-router-dom'
 
-// interface EnderecoClient {
-//   cep: string
-//   rua: string
-//   numero: string
-//   complemento?: string
-//   bairro: string
-//   cidade: string
-//   uf: string
-// }
+
 
 export function Carrinho() {
-  const { listItensPurchase } = useContext(ProductContext)
+  const { listItensPurchase, addDadosCheckout } = useContext(ProductContext)
 
   const history = useNavigate()
 
@@ -70,9 +62,9 @@ export function Carrinho() {
     console.log(formState.errors)
   }
 
-  function SubmitButton(data: EnderecoClient) {
-    console.log(data)
-    history('/addtocart')
+  function SubmitButton(data: EnderecoClient[]) {
+    addDadosCheckout(data)
+    history('/purchase')
     reset()
   }
 

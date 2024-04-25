@@ -50,4 +50,15 @@ export const DadosContainer = styled.div`
 
   /* Adiciona bordas arredondadas */
   border-radius: 20px;
+
+  div {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justent-content: center;
+  }
+`
+
+export const ImagemContainer = styled.div`
+  margin-top: 50px;
 `
