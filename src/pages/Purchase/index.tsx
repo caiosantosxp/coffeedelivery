@@ -3,6 +3,7 @@ import {
   DadosContainer,
   DetalhePedido,
   GradientBorderContainer,
+  IconeEstilizados,
   ImagemContainer,
   PurchaseContainer,
 } from './styled'
@@ -24,28 +25,44 @@ export function PurchaseCoffee() {
             </div>
             <DadosContainer>
               <div>
-                <strong>
-                  <MapPin size={22} />
-                </strong>
-                <p>
-                  Entrega em Rua joao Daniel Martinelli, 102 Farrapos - Porto
-                  Alegre - RS
-                </p>
+                <IconeEstilizados variant={'purple'}>
+                  <MapPin size={22} weight="fill" />
+                </IconeEstilizados>
+                <div className="textColuna">
+                  <p>
+                    Entrega em{' '}
+                    <strong>
+                      {dadosCheckout.rua}, {dadosCheckout.numero}
+                    </strong>{' '}
+                  </p>
+                  <p>
+                    {dadosCheckout.bairro} - {dadosCheckout.cidade} -{' '}
+                    {dadosCheckout.uf}
+                  </p>
+                </div>
               </div>
+
               <div>
-                <strong>
-                  <Timer size={22}/>
-                </strong>
-                <p>
-                  Previssao de entrega
+                <IconeEstilizados variant={'yellow'}>
+                  <Timer size={22} weight="fill" />
+                </IconeEstilizados>
+
+                <div className="textColuna">
+                  <p>Previssao de entrega </p>
                   <strong>20min - 30min</strong>
-                </p>
+                </div>
               </div>
+
               <div>
-                <strong>
-                  <CurrencyDollar size={22}/>
-                </strong>
-                <p>Pagamento na entrega Cartão de Crédito</p>
+                <IconeEstilizados variant={'yellowDark'}>
+                  <CurrencyDollar size={22} weight="fill" />
+                </IconeEstilizados>
+                <div className="textColuna">
+                  <p>Pagamento na entrega </p>
+                  <p>
+                    <strong>{dadosCheckout.payment}</strong>
+                  </p>
+                </div>
               </div>
             </DadosContainer>
           </DetalhePedido>

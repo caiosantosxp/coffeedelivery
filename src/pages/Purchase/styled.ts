@@ -1,5 +1,18 @@
 import styled from 'styled-components'
 
+export type spanVariant = 'yellow' | 'yellowDark' | 'purple' | 'baseText'
+
+interface BackgroundItensMenuProps {
+  variant: spanVariant
+}
+
+const spanVariant = {
+  yellow: 'yellow-normal',
+  yellowDark: 'yellow-dark',
+  purple: 'purple-normal',
+  baseText: 'base-text',
+} as const
+
 export const PurchaseContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -53,12 +66,36 @@ export const DadosContainer = styled.div`
 
   div {
     display: flex;
-    gap: 6px;
+    justify-content: center;
     align-items: center;
-    justent-content: center;
+    gap: 6px;
+  }
+
+  .textColuna {
+    display: block;
+  }
+
+  strong {
+    font-family: 'Baloo 2';
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  p {
   }
 `
 
 export const ImagemContainer = styled.div`
   margin-top: 50px;
+`
+export const IconeEstilizados = styled.strong<BackgroundItensMenuProps>`
+  display: flex;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  border-radius: 50%;
+  background: ${(props) => props.theme[spanVariant[props.variant]]};
+  color: ${(props) => props.theme['--white']};
 `

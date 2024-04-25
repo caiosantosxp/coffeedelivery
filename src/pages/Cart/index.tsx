@@ -20,8 +20,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
 import { useNavigate } from 'react-router-dom'
 
-
-
 export function Carrinho() {
   const { listItensPurchase, addDadosCheckout } = useContext(ProductContext)
 
@@ -62,7 +60,7 @@ export function Carrinho() {
     console.log(formState.errors)
   }
 
-  function SubmitButton(data: EnderecoClient[]) {
+  function SubmitButton(data: EnderecoClient) {
     addDadosCheckout(data)
     history('/purchase')
     reset()
@@ -151,7 +149,7 @@ export function Carrinho() {
               <div className={'butoesSelection'}>
                 <button
                   value="credit_card"
-                  onClick={() => setValue('payment', 'credit_card')}
+                  onClick={() => setValue('payment', 'Cartão de Credito')}
                 >
                   <CreditCard color="#8047F8" />
                   Cartão de Crédito
@@ -159,7 +157,7 @@ export function Carrinho() {
 
                 <button
                   value="debit_card"
-                  onClick={() => setValue('payment', 'debit_card')}
+                  onClick={() => setValue('payment', 'Cartão de Debito')}
                 >
                   <Bank color="#8047F8" />
                   Cartão de Débito
@@ -167,7 +165,7 @@ export function Carrinho() {
 
                 <button
                   value="dinheiro"
-                  onClick={() => setValue('payment', 'dinheiro')}
+                  onClick={() => setValue('payment', 'Dinheiro')}
                 >
                   <Money color="#8047F8" />
                   Dinheiro

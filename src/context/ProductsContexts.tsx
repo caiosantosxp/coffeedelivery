@@ -22,6 +22,7 @@ interface EnderecoClient {
   bairro: string
   cidade: string
   uf: string
+  payment: string
 }
 
 interface listOfMenuProductsType {
@@ -37,12 +38,12 @@ interface listOfMenuProductsType {
 interface ProductContextType {
   listItensPurchase: ItensListProduct[]
   listOfMenuProducts: listOfMenuProductsType[]
-  dadosCheckout: EnderecoClient[]
+  dadosCheckout: EnderecoClient
   purchase: (product: ItensListProduct) => void
   addItemList: (id: number) => void
   removeAmountItemList: (id: number) => void
   removeItem: (id: number) => void
-  addDadosCheckout: (dados:EnderecoClient[]) => void
+  addDadosCheckout: (dados: EnderecoClient) => void
 }
 
 export const ProductContext = createContext({} as ProductContextType)
@@ -56,7 +57,6 @@ interface ProductsContextProviderProps {
 export function ProductsContextProvider({
   children,
 }: ProductsContextProviderProps) {
-
   const listOfMenuProducts = [
     {
       id: 1,
@@ -195,9 +195,17 @@ export function ProductsContextProvider({
     ItensListProduct[]
   >([])
 
-  const [ dadosCheckout, setDadosCheckout ] = useState<EnderecoClient[]>([])
+  const [dadosCheckout, setDadosCheckout] = useState<EnderecoClient>({
+    cep: '',
+    rua: '',
+    numero: '',
+    complemento: '',
+    bairro: '',
+    cidade: '',
+    uf: '',
+    payment: '',
+  })
 
-  console.log(dadosCheckout)
   function purchase(product: ItensListProduct) {
     setlistItensPurchase((state) => {
       const itemIndex = state.findIndex((item) => item.id === product.id)
@@ -266,7 +274,7 @@ export function ProductsContextProvider({
     setlistItensPurchase(updatedList)
   }
 
-  function addDadosCheckout(dados:EnderecoClient[]){
+  function addDadosCheckout(dados: EnderecoClient) {
     setDadosCheckout(dados)
   }
 
@@ -280,7 +288,7 @@ export function ProductsContextProvider({
         addItemList,
         removeAmountItemList,
         removeItem,
-        addDadosCheckout
+        addDadosCheckout,
       }}
     >
       {children}
