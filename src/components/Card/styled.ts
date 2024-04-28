@@ -114,11 +114,3 @@ export const CountAmountItens = styled.div`
   }
 `
 
-export const MenuContainer = styled.div`
-  display: flex;
-  margin: 32px 160px 157px 160px;
-  align-items: flex-start;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 6.25rem;
-`

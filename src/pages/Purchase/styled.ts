@@ -38,38 +38,38 @@ export const DetalhePedido = styled.div`
   }
 `
 
-export const GradientBorderContainer = styled.div`
-  display: inline-block; /* Garante que o elemento envolvente se ajuste ao conteúdo */
-  border-radius: 80px; /* Define as bordas arredondadas */
+export const ItemInfo = styled.div`
+  margin-top: 20px;
+  border: 1px solid transparent;
+  width: 100%;
+  border-radius: 6px 36px;
+  background-origin: border-box;
+  background-image: linear-gradient(to bottom right, yellow, purple);
+
 `
 
-export const DadosContainer = styled.div`
-  display: flex;
-  width: 526px;
+export const InfoContainer = styled.div`
   padding: 40px;
+  background-color: white;
+  background-origin: border-box;
+  border-radius: 6px 36px;
+
+  display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 32px;
-  overflow: hidden;
-  margin: 40px 0;
 
-  border: 1px solid transparent; /* Define a borda como transparente para que o gradiente seja visível */
-  border-image: linear-gradient(
-      to right,
-      ${(props) => props.theme['yellow-normal']},
-      ${(props) => props.theme['purple-normal']}
-    )
-    1;
 
-  /* Adiciona bordas arredondadas */
-  border-radius: 20px;
-
-  div {
+  > div {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 6px;
+    gap: 12px;
+  
+    > svg {
+      padding: 8px;
+      border-radius: 999px;
+    } 
   }
+
 
   .textColuna {
     display: block;

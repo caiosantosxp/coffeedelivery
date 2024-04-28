@@ -34,8 +34,8 @@ interface listOfMenuProductsType {
 }
 
 interface ProductContextType {
-  products: NewProductsProps[]
-  listOfMenuProducts: listOfMenuProductsType[]
+  coffeesInCart: NewProductsProps[]
+  coffees: listOfMenuProductsType[]
   dadosCheckout: EnderecoClient
   purchase: (product: NewProductsProps) => void
   addItemList: (id: number) => void
@@ -55,7 +55,8 @@ interface ProductsContextProviderProps {
 export function ProductsContextProvider({
   children,
 }: ProductsContextProviderProps) {
-  const listOfMenuProducts = [
+
+  const coffees = [
     {
       id: 1,
       nome: 'Expresso Tradicional',
@@ -189,7 +190,7 @@ export function ProductsContextProvider({
     },
   ]
 
-  const [products, dispatch] = useReducer(ProductsReducers, [])
+  const [coffeesInCart, dispatch] = useReducer(ProductsReducers, [])
 
   const [dadosCheckout, setDadosCheckout] = useState<EnderecoClient>({
     cep: '',
@@ -245,10 +246,10 @@ export function ProductsContextProvider({
   return (
     <ProductContext.Provider
       value={{
-        products,
+        coffeesInCart,
         dadosCheckout,
         purchase,
-        listOfMenuProducts,
+        coffees,
         addItemList,
         removeAmountItemList,
         removeItem,

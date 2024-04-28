@@ -75,18 +75,18 @@ export const BackgroundItensMenu = styled.div`
   p + p {
     padding-top: 22px;
   }
-`
-export const IconBackgroun = styled.span<BackgroundItensMenuProps>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 8px;
-  gap: 8px;
 
-  border-radius: 1000px;
-  color: ${(props) => props.theme['--white']};
-  background: ${(props) => props.theme[spanVariant[props.variant]]};
+  svg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    gap: 8px;
+
+    border-radius: 1000px;
+  }
 `
+
 
 export const Itens = styled.div`
   display: flex;
@@ -103,4 +103,12 @@ export const Itens = styled.div`
 
     color: ${(props) => props.theme['base-subtitle']};
   }
+`
+export const MenuContainer = styled.div`
+  display: flex;
+  margin: 32px 160px 157px 160px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6.25rem;
 `

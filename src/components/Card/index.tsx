@@ -1,7 +1,7 @@
 import { Minus, Plus, ShoppingCartSimple } from '@phosphor-icons/react'
 import { CountAmountItens, ItensMenuContainer } from './styled'
 import { useContext, useState } from 'react'
-import { ProductContext } from '../../../context/ProductsContexts'
+import { ProductContext } from '../../context/ProductsContexts'
 
 interface listOfMenuProductsType {
   id: number
@@ -17,7 +17,7 @@ interface listOfMenuProductsProps {
   products: listOfMenuProductsType
 }
 
-export function ItensMenu({ products }: listOfMenuProductsProps) {
+export function Card({ products }: listOfMenuProductsProps) {
   const [quantidaItens, setQuantidadeItens] = useState<number>(1)
   const { purchase } = useContext(ProductContext)
 

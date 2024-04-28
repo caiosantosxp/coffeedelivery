@@ -21,7 +21,7 @@ import * as zod from 'zod'
 import { useNavigate } from 'react-router-dom'
 
 export function Carrinho() {
-  const { products, addDadosCheckout } = useContext(ProductContext)
+  const { coffeesInCart, addDadosCheckout } = useContext(ProductContext)
 
   const history = useNavigate()
 
@@ -50,7 +50,7 @@ export function Carrinho() {
       uf: '',
     },
   })
-  const soma = products.reduce(
+  const soma = coffeesInCart.reduce(
     (total, numero) => total + Number(numero.valor),
     0,
   )
@@ -177,7 +177,7 @@ export function Carrinho() {
         <Titulo>
           <h1>Café Selecionado</h1>
           <CheckoutContainer>
-            {products.map((produto) => {
+            {coffeesInCart.map((produto) => {
               // Verifica se o ID do produto está presente na lista de itens comprados
 
               return (
