@@ -1,18 +1,16 @@
-import { ReactNode, createContext, useState } from 'react'
+import { ReactNode, createContext, useReducer, useState } from 'react'
 import coffe1 from '../assets/Products/item1.svg'
 import coffe2 from '../assets/Products/item2.png'
 import coffe3 from '../assets/Products/item3.svg'
 import coffe4 from '../assets/Products/Type=Café com Leite.svg'
 import coffe5 from '../assets/Products/Type=Café Gelado.svg'
+import {
+  ActionTypes,
+  NewProductsProps,
+  ProductsReducers,
+} from '../reducers/products'
 
 // Aqui adiciona o tipagem do que esta sendo enviado para outras rotas
-interface ItensListProduct {
-  id: number
-  qtd: number
-  name: string
-  valor: string
-  imagem: string
-}
 
 interface EnderecoClient {
   cep: string
@@ -36,10 +34,10 @@ interface listOfMenuProductsType {
 }
 
 interface ProductContextType {
-  listItensPurchase: ItensListProduct[]
+  products: NewProductsProps[]
   listOfMenuProducts: listOfMenuProductsType[]
   dadosCheckout: EnderecoClient
-  purchase: (product: ItensListProduct) => void
+  purchase: (product: NewProductsProps) => void
   addItemList: (id: number) => void
   removeAmountItemList: (id: number) => void
   removeItem: (id: number) => void
@@ -191,9 +189,7 @@ export function ProductsContextProvider({
     },
   ]
 
-  const [listItensPurchase, setlistItensPurchase] = useState<
-    ItensListProduct[]
-  >([])
+  const [products, dispatch] = useReducer(ProductsReducers, [])
 
   const [dadosCheckout, setDadosCheckout] = useState<EnderecoClient>({
     cep: '',
@@ -206,72 +202,40 @@ export function ProductsContextProvider({
     payment: '',
   })
 
-  function purchase(product: ItensListProduct) {
-    setlistItensPurchase((state) => {
-      const itemIndex = state.findIndex((item) => item.id === product.id)
-
-      // Se o produto já está na lista
-      if (itemIndex !== -1) {
-        // Cria uma nova lista de itens com a quantidade atualizada
-        const updatedList = [...state]
-        updatedList[itemIndex] = {
-          ...updatedList[itemIndex],
-          qtd: updatedList[itemIndex].qtd + product.qtd,
-        }
-        return updatedList
-      } else {
-        // Se o produto não está na lista, adiciona-o à lista
-        return [...state, product]
-      }
+  function purchase(product: NewProductsProps) {
+    dispatch({
+      type: ActionTypes.ADD_NEW_PURCHASE,
+      payload: {
+        data: product,
+      },
     })
   }
 
   function addItemList(id: number) {
-    setlistItensPurchase((state) => {
-      const itemIndex = state.findIndex((item) => item.id === id)
-
-      // Se o produto já está na lista
-      if (itemIndex !== -1) {
-        // Cria uma nova lista de itens com a quantidade atualizada
-        const updatedList = [...state]
-        updatedList[itemIndex] = {
-          ...updatedList[itemIndex],
-          qtd: updatedList[itemIndex].qtd + 1,
-        }
-        return updatedList
-      } else {
-        // Se o produto não está na lista, adiciona-o à lista
-        return state
-      }
+    dispatch({
+      type: ActionTypes.ADD_NEW_ITEM_LIST,
+      payload: {
+        data: id,
+      },
     })
   }
 
   function removeAmountItemList(id: number) {
-    setlistItensPurchase((state) => {
-      const itemIndex = state.findIndex((item) => item.id === id)
-
-      // Se o produto já está na lista
-      if (itemIndex !== -1) {
-        // Cria uma nova lista de itens com a quantidade atualizada
-        const updatedList = [...state]
-
-        if (updatedList[itemIndex].qtd > 1) {
-          updatedList[itemIndex] = {
-            ...updatedList[itemIndex],
-            qtd: updatedList[itemIndex].qtd - 1,
-          }
-        }
-        return updatedList
-      } else {
-        // Se o produto não está na lista, adiciona-o à lista
-        return state
-      }
+    dispatch({
+      type: ActionTypes.REMOVE_AMOUNT_ITEM_LIST,
+      payload: {
+        data: id,
+      },
     })
   }
 
   function removeItem(id: number) {
-    const updatedList = listItensPurchase.filter((item) => item.id !== id)
-    setlistItensPurchase(updatedList)
+    dispatch({
+      type: ActionTypes.REMOVE_ITEM,
+      payload: {
+        data: id,
+      },
+    })
   }
 
   function addDadosCheckout(dados: EnderecoClient) {
@@ -281,7 +245,7 @@ export function ProductsContextProvider({
   return (
     <ProductContext.Provider
       value={{
-        listItensPurchase,
+        products,
         dadosCheckout,
         purchase,
         listOfMenuProducts,

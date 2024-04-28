@@ -21,7 +21,7 @@ import * as zod from 'zod'
 import { useNavigate } from 'react-router-dom'
 
 export function Carrinho() {
-  const { listItensPurchase, addDadosCheckout } = useContext(ProductContext)
+  const { products, addDadosCheckout } = useContext(ProductContext)
 
   const history = useNavigate()
 
@@ -38,27 +38,26 @@ export function Carrinho() {
 
   type EnderecoClient = zod.infer<typeof FormularioValidacaoNovoEnderecoSchema>
 
-  const { register, handleSubmit, formState, reset, setValue } =
-    useForm<EnderecoClient>({
-      resolver: zodResolver(FormularioValidacaoNovoEnderecoSchema),
-      defaultValues: {
-        cep: '',
-        rua: '',
-        numero: '',
-        complemento: '',
-        bairro: '',
-        cidade: '',
-        uf: '',
-      },
-    })
-  const soma = listItensPurchase.reduce(
+  const { register, handleSubmit, reset, setValue } = useForm<EnderecoClient>({
+    resolver: zodResolver(FormularioValidacaoNovoEnderecoSchema),
+    defaultValues: {
+      cep: '',
+      rua: '',
+      numero: '',
+      complemento: '',
+      bairro: '',
+      cidade: '',
+      uf: '',
+    },
+  })
+  const soma = products.reduce(
     (total, numero) => total + Number(numero.valor),
     0,
   )
 
-  if (formState.errors.rua) {
-    console.log(formState.errors)
-  }
+  // if (formState.errors.rua) {
+  //   console.log(formState.errors)
+  // }
 
   function SubmitButton(data: EnderecoClient) {
     addDadosCheckout(data)
@@ -80,16 +79,16 @@ export function Carrinho() {
             </h1>
             <p> Informe o endereço onde deseja receber seu pedido</p>
             <form>
-              <div>
-                <input
-                  type="text"
-                  id="exampleInputEmail1"
-                  placeholder="CEP"
-                  style={{ width: '97%' }}
-                  {...register('cep')}
-                />
-              </div>
               <div className={'form'}>
+                <div>
+                  <input
+                    type="text"
+                    id="exampleInputEmail1"
+                    placeholder="CEP"
+                    {...register('cep')}
+                  />
+                </div>
+
                 <div>
                   <input
                     type="text"
@@ -107,8 +106,8 @@ export function Carrinho() {
                   />
                   <input
                     type="text"
-                    placeholder="Complemento"
                     style={{ width: '75%' }}
+                    placeholder="Complemento"
                     {...register('complemento')}
                   />
                 </div>
@@ -116,19 +115,19 @@ export function Carrinho() {
                   <input
                     type="text"
                     placeholder="Bairro"
-                    style={{ width: '30%' }}
+                    style={{ width: '35%' }}
                     {...register('bairro')}
                   />
                   <input
                     type="text"
                     placeholder="Cidade"
-                    style={{ width: '50%' }}
+                    style={{ width: '37%' }}
                     {...register('cidade')}
                   />
                   <input
                     type="text"
                     placeholder="UF"
-                    style={{ width: '12%' }}
+                    style={{ width: '20%' }}
                     {...register('uf')}
                   />
                 </div>
@@ -178,7 +177,7 @@ export function Carrinho() {
         <Titulo>
           <h1>Café Selecionado</h1>
           <CheckoutContainer>
-            {listItensPurchase.map((produto) => {
+            {products.map((produto) => {
               // Verifica se o ID do produto está presente na lista de itens comprados
 
               return (
