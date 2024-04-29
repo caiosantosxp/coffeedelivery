@@ -3,16 +3,21 @@ import {
   CreditCard,
   CurrencyDollar,
   MapPinLine,
+  Minus,
   Money,
+  Plus,
 } from '@phosphor-icons/react'
 import {
   CartContainer,
   CheckoutContainer,
+  CountAmountItensCheckout,
   FormContainer,
+  InfoPayment,
+  ItemCheckout,
   PaymentContainer,
+  SectionPayment,
   Titulo,
 } from './styles'
-import { ItemCheckoutView } from './ItemCheckout'
 import { useContext } from 'react'
 import { ProductContext } from '../../context/ProductsContexts'
 import { useForm } from 'react-hook-form'
@@ -21,7 +26,14 @@ import * as zod from 'zod'
 import { useNavigate } from 'react-router-dom'
 
 export function Carrinho() {
-  const { coffeesInCart, addDadosCheckout } = useContext(ProductContext)
+  const {
+    removeItem,
+    incrementItemQuantity,
+    decrementItemQuantity,
+    coffeesInCart,
+    addDadosCheckout,
+    resetTotalItem,
+  } = useContext(ProductContext)
 
   const history = useNavigate()
 
@@ -50,22 +62,20 @@ export function Carrinho() {
       uf: '',
     },
   })
-  const soma = coffeesInCart.reduce(
+
+  const valorTotal = coffeesInCart.reduce(
     (total, numero) => total + Number(numero.valor),
     0,
   )
 
-  // if (formState.errors.rua) {
-  //   console.log(formState.errors)
-  // }
-
   function SubmitButton(data: EnderecoClient) {
     addDadosCheckout(data)
     history('/purchase')
+    resetTotalItem()
     reset()
   }
 
-  const valorcomfrete = soma + 3.5
+  const valorFrete = 3.5
 
   return (
     <>
@@ -145,31 +155,33 @@ export function Carrinho() {
                   pagar
                 </p>
               </div>
-              <div className={'butoesSelection'}>
-                <button
-                  value="credit_card"
-                  onClick={() => setValue('payment', 'Cartão de Credito')}
-                >
-                  <CreditCard color="#8047F8" />
-                  Cartão de Crédito
-                </button>
+              <SectionPayment>
+                <div>
+                  <button
+                    value="credit_card"
+                    onClick={() => setValue('payment', 'Cartão de Credito')}
+                  >
+                    <CreditCard color="#8047F8" />
+                    Cartão de Crédito
+                  </button>
 
-                <button
-                  value="debit_card"
-                  onClick={() => setValue('payment', 'Cartão de Debito')}
-                >
-                  <Bank color="#8047F8" />
-                  Cartão de Débito
-                </button>
+                  <button
+                    value="debit_card"
+                    onClick={() => setValue('payment', 'Cartão de Debito')}
+                  >
+                    <Bank color="#8047F8" />
+                    Cartão de Débito
+                  </button>
 
-                <button
-                  value="dinheiro"
-                  onClick={() => setValue('payment', 'Dinheiro')}
-                >
-                  <Money color="#8047F8" />
-                  Dinheiro
-                </button>
-              </div>
+                  <button
+                    value="dinheiro"
+                    onClick={() => setValue('payment', 'Dinheiro')}
+                  >
+                    <Money color="#8047F8" />
+                    Dinheiro
+                  </button>
+                </div>
+              </SectionPayment>
             </PaymentContainer>
           </div>
         </div>
@@ -179,31 +191,51 @@ export function Carrinho() {
           <CheckoutContainer>
             {coffeesInCart.map((produto) => {
               // Verifica se o ID do produto está presente na lista de itens comprados
-
               return (
-                <ItemCheckoutView
-                  key={produto.id}
-                  id={produto.id}
-                  name={produto.name}
-                  imagem={produto.imagem}
-                  valor={produto.valor}
-                  qtd={produto.qtd} // Usando a quantidade do item comprado
-                />
+                <ItemCheckout key={produto.id}>
+                  <img src={produto.imagem} alt="" />
+                  <div>
+                    <strong>{produto.name}</strong>
+                    <div style={{ display: 'flex' }}>
+                      <CountAmountItensCheckout>
+                        <Minus
+                          size={14}
+                          weight="bold"
+                          onClick={() => decrementItemQuantity(produto.id)}
+                        />
+                        <input
+                          type="text"
+                          placeholder={String(produto.qtd)}
+                          disabled
+                        />
+                        <Plus
+                          size={14}
+                          weight="bold"
+                          onClick={() => incrementItemQuantity(produto.id)}
+                        />
+                      </CountAmountItensCheckout>
+                      <button onClick={() => removeItem(produto.id)}>
+                        REMOVER
+                      </button>
+                    </div>
+                  </div>
+                  <p>R$ {produto.valor}</p>
+                </ItemCheckout>
               )
             })}
 
-            <div className={'totalcountlist'}>
+            <InfoPayment>
               <div>
                 <p>Total de itens</p>
                 <p>Entrega</p>
                 <strong> Total </strong>
               </div>
               <div>
-                <p>R$ {soma.toFixed(2)}</p>
-                <p>R$ 3.50</p>
-                <strong>R$ {valorcomfrete.toFixed(2)}</strong>
+                <p>R$ {valorTotal.toFixed(2)}</p>
+                <p>R$ {valorFrete.toFixed(2)}</p>
+                <strong>R$ {(valorFrete * valorTotal).toFixed(2)}</strong>
               </div>
-            </div>
+            </InfoPayment>
             <button onClick={handleSubmit(SubmitButton)}>CONFIRMAR</button>
           </CheckoutContainer>
         </Titulo>

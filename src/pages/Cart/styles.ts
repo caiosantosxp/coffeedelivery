@@ -79,15 +79,6 @@ export const PaymentContainer = styled.div`
   border-radius: 6px;
   background: ${(props) => props.theme['base-card']};
 
-  .butoesSelection {
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    margin: auto;
-  }
-
   h1 {
     display: flex;
     align-items: center;
@@ -151,36 +142,6 @@ export const CheckoutContainer = styled.div`
   border-radius: 6px 44px;
   background: ${(props) => props.theme['base-card']};
 
-  .totalcountlist {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    align-self: stretch;
-    align-items: center;
-
-    p {
-      text-align: right;
-      font-size: 14px;
-      line-height: 1.3;
-      font-weight: 400;
-
-      color: ${(props) => props.theme['base-text']};
-    }
-
-    strong {
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 1.3;
-      text-align: right;
-
-      color: ${(props) => props.theme['base-subtitle']};
-    }
-
-    * {
-      padding-bottom: 12px;
-    }
-  }
-
   button {
     display: flex;
     padding: 12px 8px;
@@ -199,5 +160,114 @@ export const CheckoutContainer = styled.div`
     font-weight: 700;
   }
 `
+export const InfoPayment = styled.div`
+  display: flex;
+  justify-content: space-between;
 
-export const totalContainerList = styled.div``
+  gap: 12px;
+  align-self: stretch;
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.3;
+    font-weight: 400;
+
+    color: ${(props) => props.theme['base-text']};
+  }
+
+  strong {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: right;
+
+    color: ${(props) => props.theme['base-subtitle']};
+  }
+
+  * {
+    padding-bottom: 12px;
+  }
+`
+
+export const SectionPayment = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  margin: auto;
+  gap: 8px;
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  button {
+    width: 200px;
+  }
+`
+
+export const ItemCheckout = styled.div`
+  display: flex;
+  padding: 8px 4px;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+  padding: 24px 0px 24px 0;
+  border-bottom: 1px solid ${(props) => props.theme['base-button']};
+
+  img {
+    display: flex;
+    width: 64px;
+    height: 64px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  button {
+    display: flex;
+    height: 32px;
+    padding: 0px 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+
+    border-radius: 6px;
+    background: ${(props) => props.theme['base-button']};
+
+    color: ${(props) => props.theme['base-text']};
+
+    font-size: 12px;
+    line-height: 1.6;
+    text-transform: uppercase;
+  }
+`
+
+export const CountAmountItensCheckout = styled.div`
+  display: flex;
+  margin-right: 8px;
+  height: 32px;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+
+  font-size: 14px;
+  color: ${(props) => props.theme['purple-dark']};
+  border-radius: 6px;
+  background: ${(props) => props.theme['base-button']};
+
+  input {
+    width: 20px;
+    text-decoration: none;
+    border: 0;
+    background: transparent;
+    text-align: center;
+
+    color: ${(props) => props.theme['base-subtitle']};
+  }
+`

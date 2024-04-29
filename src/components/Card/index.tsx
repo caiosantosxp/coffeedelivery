@@ -18,15 +18,15 @@ interface listOfMenuProductsProps {
 }
 
 export function Card({ products }: listOfMenuProductsProps) {
-  const [quantidaItens, setQuantidadeItens] = useState<number>(1)
-  const { purchase } = useContext(ProductContext)
+  const [quantity, setQuantity] = useState<number>(1)
+  const { addItem } = useContext(ProductContext)
 
-  function Mais() {
-    setQuantidadeItens((state) => state + 1)
+  function incrementQuantity() {
+    setQuantity((state) => state + 1)
   }
 
-  function Menos() {
-    setQuantidadeItens((state: number) => {
+  function decrementQuantity() {
+    setQuantity((state: number) => {
       if (state > 1) {
         return state - 1
       } else {
@@ -38,12 +38,12 @@ export function Card({ products }: listOfMenuProductsProps) {
   function PurchaseItens() {
     const list = {
       id: products.id,
-      qtd: quantidaItens,
+      qtd: quantity,
       name: products.nome,
       valor: products.preco,
       imagem: products.img,
     }
-    purchase(list)
+    addItem(list)
   }
 
   return (
@@ -58,9 +58,9 @@ export function Card({ products }: listOfMenuProductsProps) {
         </h2>
         <>
           <CountAmountItens>
-            <Minus size={14} weight="bold" onClick={Menos} />
-            <input type="text" placeholder={String(quantidaItens)} disabled />
-            <Plus size={14} weight="bold" onClick={Mais} />
+            <Minus size={14} weight="bold" onClick={decrementQuantity} />
+            <input type="text" placeholder={String(quantity)} disabled />
+            <Plus size={14} weight="bold" onClick={incrementQuantity} />
           </CountAmountItens>
           <button onClick={PurchaseItens}>
             <ShoppingCartSimple size={22} weight="fill" />

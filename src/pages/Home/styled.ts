@@ -43,18 +43,6 @@ export const BackgroundItens = styled.div`
     color: ${(props) => props.theme['base-subtitle']};
   }
 `
-export type spanVariant = 'yellow' | 'yellowDark' | 'purple' | 'baseText'
-
-interface BackgroundItensMenuProps {
-  variant: spanVariant
-}
-
-const spanVariant = {
-  yellow: 'yellow-normal',
-  yellowDark: 'yellow-dark',
-  purple: 'purple-normal',
-  baseText: 'base-text',
-} as const
 
 export const BackgroundItensMenu = styled.div`
   display: flex;
@@ -75,18 +63,30 @@ export const BackgroundItensMenu = styled.div`
   p + p {
     padding-top: 22px;
   }
-
-  svg {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 8px;
-    gap: 8px;
-
-    border-radius: 1000px;
-  }
 `
+export type spanVariant = 'yellow' | 'yellowDark' | 'purple' | 'baseText'
 
+const spanVariant = {
+  yellow: 'yellow-normal',
+  yellowDark: 'yellow-dark',
+  purple: 'purple-normal',
+  baseText: 'base-text',
+} as const
+
+interface BackgroundItensMenuProps {
+  variant: spanVariant
+}
+
+export const IconBackgroun = styled.span<BackgroundItensMenuProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  gap: 8px;
+  border-radius: 1000px;
+  color: ${(props) => props.theme['--white']};
+  background: ${(props) => props.theme[spanVariant[props.variant]]};
+`
 
 export const Itens = styled.div`
   display: flex;

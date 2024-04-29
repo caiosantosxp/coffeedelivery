@@ -17,6 +17,7 @@ export enum ActionTypes {
   ADD_NEW_ITEM_LIST = 'ADD_NEW_ITEM_LIST',
   REMOVE_AMOUNT_ITEM_LIST = 'REMOVE_AMOUNT_ITEM_LIST',
   REMOVE_ITEM = 'REMOVE_ITEM',
+  REMOVE_TOTAL_ITEM = 'REMOVE_TOTAL_ITEM',
 }
 
 export function ProductsReducers(
@@ -86,6 +87,12 @@ export function ProductsReducers(
       const updatedList = state.filter(
         (item) => item.id !== action.payload.data,
       )
+
+      return updatedList
+    }
+
+    case ActionTypes.REMOVE_TOTAL_ITEM: {
+      const updatedList: NewProductsProps[] = []
       return updatedList
     }
 

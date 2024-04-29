@@ -2,6 +2,7 @@ import {
   BackgroundContainer,
   BackgroundItens,
   BackgroundItensMenu,
+  IconBackgroun,
   Itens,
   MenuContainer,
 } from './styled'
@@ -17,11 +18,9 @@ import {
 import { useContext } from 'react'
 import { ProductContext } from '../../context/ProductsContexts'
 import { Card } from '../../components/Card'
-import { useTheme } from 'styled-components'
 
 export function Home() {
-  const { coffees } = useContext(ProductContext)
-  const theme = useTheme()
+  const { listCoffes } = useContext(ProductContext)
   return (
     <>
       <BackgroundContainer>
@@ -36,29 +35,29 @@ export function Home() {
           <BackgroundItensMenu>
             <div>
               <p>
-
+                <IconBackgroun variant="yellowDark">
                   <ShoppingCartSimple size={16} weight="fill" />
-
+                </IconBackgroun>
                 Compra simples e segura
               </p>
               <p>
-
-                  <Timer size={16} weight="fill" style={{ backgroundColor: theme['yellow-dark'], color: theme['--white']}} />
-
+                <IconBackgroun variant="purple">
+                  <Timer size={16} weight="fill" />
+                </IconBackgroun>
                 Entrega rápida e rastreada
               </p>
             </div>
             <div>
               <p>
-
+                <IconBackgroun variant="baseText">
                   <Package size={16} weight="fill" />
-
+                </IconBackgroun>
                 Embalagem mantém o café intacto
               </p>
               <p>
-
-                  <Coffee size={16} color={theme['background-cor']} weight="fill"  style={{ backgroundColor: theme['yellow-dark'], color: theme['--white']}} />
-
+                <IconBackgroun variant="yellow">
+                  <Coffee size={16} weight="fill" />
+                </IconBackgroun>
                 O café chega fresquinho até vocÊ
               </p>
             </div>
@@ -71,7 +70,7 @@ export function Home() {
       <Itens>
         <h1>Nossos cafés</h1>
         <MenuContainer>
-          {coffees.map((coffee) => {
+          {listCoffes.map((coffee) => {
             return <Card key={coffee.id} products={coffee} />
           })}
         </MenuContainer>

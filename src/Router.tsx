@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import { Carrinho } from './pages/Cart'
 import { DefaultLayout } from './layout/DefaultLayout'
 import { Home } from './pages/Home'
-import { PurchaseCoffee } from './pages/Purchase'
+import { PurchaseCoffee } from './pages/Success'
 
 export function Router() {
   return (

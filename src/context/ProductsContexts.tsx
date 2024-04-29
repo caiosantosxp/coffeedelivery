@@ -1,14 +1,10 @@
 import { ReactNode, createContext, useReducer, useState } from 'react'
-import coffe1 from '../assets/Products/item1.svg'
-import coffe2 from '../assets/Products/item2.png'
-import coffe3 from '../assets/Products/item3.svg'
-import coffe4 from '../assets/Products/Type=Café com Leite.svg'
-import coffe5 from '../assets/Products/Type=Café Gelado.svg'
 import {
   ActionTypes,
   NewProductsProps,
   ProductsReducers,
 } from '../reducers/products'
+import { coffees } from '../components/coffes/coffees'
 
 // Aqui adiciona o tipagem do que esta sendo enviado para outras rotas
 
@@ -35,13 +31,14 @@ interface listOfMenuProductsType {
 
 interface ProductContextType {
   coffeesInCart: NewProductsProps[]
-  coffees: listOfMenuProductsType[]
-  dadosCheckout: EnderecoClient
-  purchase: (product: NewProductsProps) => void
-  addItemList: (id: number) => void
-  removeAmountItemList: (id: number) => void
+  listCoffes: listOfMenuProductsType[]
+  checkout: EnderecoClient
+  addItem: (product: NewProductsProps) => void
+  incrementItemQuantity: (id: number) => void
+  decrementItemQuantity: (id: number) => void
   removeItem: (id: number) => void
   addDadosCheckout: (dados: EnderecoClient) => void
+  resetTotalItem: () => void
 }
 
 export const ProductContext = createContext({} as ProductContextType)
@@ -55,144 +52,9 @@ interface ProductsContextProviderProps {
 export function ProductsContextProvider({
   children,
 }: ProductsContextProviderProps) {
-
-  const coffees = [
-    {
-      id: 1,
-      nome: 'Expresso Tradicional',
-      descricao: 'O tradicional café feito com água quente e grãos moídos',
-      preco: '9.90',
-      qtdEstoque: 50,
-      img: coffe1,
-      tags: 'Tradicional',
-    },
-
-    {
-      id: 2,
-      nome: 'Expresso Americano',
-      descricao: 'Expresso diluído, menos intenso que o tradicional',
-      preco: '9.90',
-      qtdEstoque: 50,
-      img: coffe2,
-      tags: 'Tradicional',
-    },
-    {
-      id: 3,
-      nome: 'Expresso Cremoso',
-      descricao: 'Café expresso tradicional com espuma cremosa',
-      preco: '9.90',
-      qtdEstoque: 50,
-      img: coffe3,
-      tags: 'Tradicional',
-    },
-    {
-      id: 4,
-      nome: 'Expresso Geldado',
-      descricao: 'Bebida preparada com café expresso e cubos de gelo',
-      preco: '9.90',
-      qtdEstoque: 50,
-      img: coffe4,
-      tags: 'Tradicional - Gelado',
-    },
-    {
-      id: 5,
-      nome: 'Café com leite',
-      descricao: 'Meio a meio de expresso tradicional com leite vaporizado',
-      preco: '9.90',
-      qtdEstoque: 50,
-      img: coffe5,
-      tags: 'Tradicional - Com leite',
-    },
-    {
-      id: 6,
-      nome: 'Latte',
-      descricao:
-        'Uma dose de café expresso com o dobro de leite e espuma cremosa',
-      preco: '9.90',
-      qtdEstoque: 50,
-      img: coffe5,
-      tags: 'Tradicional - Com leite',
-    },
-    {
-      id: 7,
-      nome: 'Capuccino',
-      descricao:
-        'Bebida com canela feita de doses iguais de café, leite e espuma',
-      preco: '9.90',
-      qtdEstoque: 50,
-      img: coffe5,
-      tags: 'Tradicional - Com leite',
-    },
-    {
-      id: 8,
-      nome: 'Macchiato',
-      descricao:
-        'Café expresso misturado com um pouco de leite quente e espuma',
-      preco: '9.90',
-      qtdEstoque: 50,
-      img: coffe5,
-      tags: 'Tradicional - Com leite',
-    },
-    {
-      id: 9,
-      nome: 'Mocaccino',
-      descricao: 'Café expresso com calda de chocolate, pouco leite e espuma',
-      preco: '9.90',
-      qtdEstoque: 50,
-      img: coffe5,
-      tags: 'Tradicional - Com leite',
-    },
-    {
-      id: 10,
-      nome: 'Chocolate Quente',
-      descricao: 'Bebida feita com chocolate dissolvido no leite quente e café',
-      preco: '9.90',
-      qtdEstoque: 50,
-      img: coffe5,
-      tags: 'Especial - Com leite',
-    },
-    {
-      id: 11,
-      nome: 'Cubano',
-      descricao:
-        'Drink gelado de café expresso com rum, creme de leite e hortelã',
-      preco: '9.90',
-      qtdEstoque: 50,
-      img: coffe5,
-      tags: 'Especial - Alcoolíco - Com leite',
-    },
-    {
-      id: 12,
-      nome: 'Havaiano',
-      descricao: 'Bebida adocicada preparada com café e leite de coco',
-      preco: '9.90',
-      qtdEstoque: 50,
-      img: coffe5,
-      tags: 'Especial',
-    },
-    {
-      id: 13,
-      nome: 'Árabe',
-      descricao: 'Bebida preparada com grãos de café árabe e especiarias',
-      preco: '9.90',
-      qtdEstoque: 50,
-      img: coffe5,
-      tags: 'Especial',
-    },
-    {
-      id: 14,
-      nome: 'Irlandês',
-      descricao: 'Bebida a base de café, uísque irlandês, açúrcar e chantilly',
-      preco: '9.90',
-      qtdEstoque: 50,
-      img: coffe5,
-      tags: 'Especial - Alcoolíco',
-    },
-  ]
-
+  const listCoffes = coffees
   const [coffeesInCart, dispatch] = useReducer(ProductsReducers, [])
-
-  const [dadosCheckout, setDadosCheckout] = useState<EnderecoClient>({
+  const [checkout, setCheckout] = useState<EnderecoClient>({
     cep: '',
     rua: '',
     numero: '',
@@ -203,7 +65,7 @@ export function ProductsContextProvider({
     payment: '',
   })
 
-  function purchase(product: NewProductsProps) {
+  function addItem(product: NewProductsProps) {
     dispatch({
       type: ActionTypes.ADD_NEW_PURCHASE,
       payload: {
@@ -212,7 +74,7 @@ export function ProductsContextProvider({
     })
   }
 
-  function addItemList(id: number) {
+  function incrementItemQuantity(id: number) {
     dispatch({
       type: ActionTypes.ADD_NEW_ITEM_LIST,
       payload: {
@@ -221,7 +83,7 @@ export function ProductsContextProvider({
     })
   }
 
-  function removeAmountItemList(id: number) {
+  function decrementItemQuantity(id: number) {
     dispatch({
       type: ActionTypes.REMOVE_AMOUNT_ITEM_LIST,
       payload: {
@@ -239,21 +101,31 @@ export function ProductsContextProvider({
     })
   }
 
+  function resetTotalItem() {
+    dispatch({
+      type: ActionTypes.REMOVE_TOTAL_ITEM,
+      payload: {
+        data: 'remove total item',
+      },
+    })
+  }
+
   function addDadosCheckout(dados: EnderecoClient) {
-    setDadosCheckout(dados)
+    setCheckout(dados)
   }
 
   return (
     <ProductContext.Provider
       value={{
         coffeesInCart,
-        dadosCheckout,
-        purchase,
-        coffees,
-        addItemList,
-        removeAmountItemList,
+        checkout,
+        addItem,
+        listCoffes,
+        incrementItemQuantity,
+        decrementItemQuantity,
         removeItem,
         addDadosCheckout,
+        resetTotalItem,
       }}
     >
       {children}

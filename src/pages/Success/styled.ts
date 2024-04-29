@@ -45,7 +45,6 @@ export const ItemInfo = styled.div`
   border-radius: 6px 36px;
   background-origin: border-box;
   background-image: linear-gradient(to bottom right, yellow, purple);
-
 `
 
 export const InfoContainer = styled.div`
@@ -58,18 +57,16 @@ export const InfoContainer = styled.div`
   flex-direction: column;
   gap: 32px;
 
-
   > div {
     display: flex;
     align-items: center;
     gap: 12px;
-  
+
     > svg {
       padding: 8px;
       border-radius: 999px;
-    } 
+    }
   }
-
 
   .textColuna {
     display: block;
