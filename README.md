@@ -1,3 +1,8 @@
+<img src='public/img1.png' >
+<img src='public/img3.png' >
+
+<br>
+
 # CoffeeDelivery
 
 CoffeeDelivery é uma aplicação web que permite aos usuários escolher e encomendar uma variedade de cafés de forma conveniente. A seguir, são apresentadas algumas funcionalidades e aspectos importantes do projeto.
